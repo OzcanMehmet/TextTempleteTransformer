@@ -88,12 +88,7 @@
       <SubType>Designer</SubType>
     </VSCTCompile>
     <Content Include="index.html" />
-    <Content Include="logo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="Resources\download.png" />
-    <Content Include="Resources\logo.png" />
     <Content Include="Resources\windows.png" />
     <Content Include="Resources\Command.png" />
     <Content Include="Resources\CommandPackage.ico" />
