@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <!--  This is the file that defines the actual layout and type of the commands.
+        It is divided in different sections (e.g. command definition, command
+        placement, ...), with each defining a specific set of properties.
+        See the comment before each section for more details about how to
+        use it. -->
+
+  <!--  The VSCT compiler (the tool that translates this file into the binary
+        format that VisualStudio will consume) has the ability to run a preprocessor
+        on the vsct file; this preprocessor is (usually) the C++ preprocessor, so
+        it is possible to define includes and macros with the same syntax used
+        in C++ files. Using this ability of the compiler here, we include some files
+        defining some of the constants that we will use inside the file. -->
+
+  <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
+  <Extern href="stdidcmd.h"/>
+
+  <!--This header contains the command ids for the menus provided by the shell. -->
+  <Extern href="vsshlids.h"/>
+
+  <!--The Commands section is where commands, menus, and menu groups are defined.
+      This section uses a Guid to identify the package that provides the command defined inside it. -->
+   
+  <Commands package="guidCommandPackage">
+    <!-- Inside this section we have different sub-sections: one for the menus, another
+    for the menu groups, one for the buttons (the actual commands), one for the combos
+    and the last one for the bitmaps used. Each element is identified by a command id that
+    is a unique pair of guid and numeric identifier; the guid part of the identifier is usually
+    called "command set" and is used to group different command inside a logically related
+    group; your package should define its own command set in order to avoid collisions
+    with command ids defined by other packages. -->
+
+    <!-- In this section you can define new menu groups. A menu group is a container for
+         other menus or buttons (commands); from a visual point of view you can see the
+         group as the part of a menu contained between two lines. The parent of a group
+         must be a menu. -->
+    <Groups>
+      <Group guid="guidCommandPackageCmdSet" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
+      </Group>
+    
+    
+    
+    <Group guid="guidCommandPackageCmdSet" id="MyToolbarItemGroup" priority="0x4000" >
+    <Parent guid="guidCommandPackageCmdSet" id="menu" />
+    </Group>
+    <!-- The group for the items on the MenuController drop-down. It is added to the MenuController submenu. -->
+    <Group guid="guidCommandPackageCmdSet" id="MyMenuControllerGroup" priority="0x4000" >
+        <Parent guid="guidCommandPackageCmdSet" id="MyMenuController" />
+    </Group>
+    </Groups>
+
+    <Menus>
+      <Menu id="menu" guid="guidCommandPackageCmdSet" type="Toolbar" priority="0x0001">
+        <Strings>
+          <ButtonText>BTSoft Templete Tool</ButtonText>
+        </Strings>
+      </Menu>
+     
+       
+         
+       <Menu guid="guidCommandPackageCmdSet" id="MyMenuController" priority="0x1000" type="MenuController">
+        <Parent guid="guidCommandPackageCmdSet" id="MyToolbarItemGroup" />
+        <CommandFlag>DynamicVisibility</CommandFlag>
+         <CommandFlag>DefaultInvisible</CommandFlag>
+        <Strings>
+           <ButtonText>Murtaza</ButtonText>
+       </Strings>
+  
+    </Menu>
+    
+    
+    
+    </Menus>
+    <!--Buttons section. -->
+    <!--This section defines the elements the user can interact with, like a menu command or a button
+        or combo box in a toolbar. -->
+    <Buttons>
+      <!--To define a menu group you have to specify its ID, the parent menu and its display priority.
+          The command is visible and enabled by default. If you need to change the visibility, status, etc, you can use
+          the CommandFlag node.
+          You can add more than one CommandFlag node e.g.:
+              <CommandFlag>DefaultInvisible</CommandFlag>
+              <CommandFlag>DynamicVisibility</CommandFlag>
+          If you do not want an image next to your command, remove the Icon node /> -->
+      <Button guid="guidCommandPackageCmdSet" id="default" priority="0x0100" type= "Button"   >
+        <Parent guid="guidCommandPackageCmdSet" id="MyMenuGroup"  />
+        <Icon guid="guidImages" id="bmpPic1" />      
+        <CommandFlag>CommandWellOnly</CommandFlag >      
+        <Strings>
+          <ButtonText>Default TT</ButtonText>
+        </Strings>
+      </Button>
+
+      <Button guid="guidCommandPackageCmdSet" id="config" priority="0x0100" type="Button">
+        <Parent guid="guidCommandPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="guidCommandPackage" id="bmpPic2" />
+        <CommandFlag>CommandWellOnly</CommandFlag>
+        <Strings>
+          <ButtonText>Config</ButtonText>
+        </Strings>
+      </Button>
+    
+       <!-- split list /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+  
+      <Button guid="guidCommandPackageCmdSet" id="cmdidMyDynamicStartCommand00" priority="0x0100" >
+      <Parent guid="guidCommandPackageCmdSet" id="MyMenuControllerGroup" />
+      <CommandFlag>DynamicVisibility</CommandFlag>
+      <CommandFlag>TextChanges</CommandFlag>
+      <!-- This text does not appear. -->
+      <Strings>
+        <ButtonText>NULL</ButtonText>
+      </Strings>
+    </Button>
+     <!-- split list end -->
+     
+    </Buttons>
+
+    <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
+    <Bitmaps>
+      <!--  The bitmap id is defined in a way that is a little bit different from the others:
+            the declaration starts with a guid for the bitmap strip, then there is the resource id of the
+            bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
+            inside a button definition. An important aspect of this declaration is that the element id
+            must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
+      <Bitmap guid="guidImages" href="Resources\download.png" usedList="bmpPic1"/>
+      <Bitmap guid="guidCommandPackage" href="Resources\windows.png" usedList="bmpPic2"/>
+    </Bitmaps>
+  
+  </Commands>
+  <CommandPlacements>
+    <CommandPlacement guid="guidCommandPackageCmdSet" id="MyMenuGroup" priority="0x0600">
+      <Parent guid="guidCommandPackageCmdSet" id="menu"/>
+   
+    </CommandPlacement>
+ 
+  </CommandPlacements>
+
+  <Symbols>
+    <!-- This is the package guid. -->
+    <GuidSymbol name="guidCommandPackage" value="{71e8cd40-cf3a-47d7-a5ed-cad021fd178e}" >
+      <IDSymbol name="bmpPic2" value="1" />
+    </GuidSymbol>
+
+    <!-- This is the guid used to group the menu commands together -->
+    <GuidSymbol name="guidCommandPackageCmdSet" value="{c4535166-f621-42b0-88a8-08d39ad8523a}">
+      <IDSymbol name="MyMenuGroup" value="0x1020" />
+      <IDSymbol name="default" value="0x0001" />
+      <IDSymbol name="config"  value="0x0002" />
+      <IDSymbol name="menu"    value="0x0103" />
+      <IDSymbol name="list"  value="0x0005" />
+      <IDSymbol name="combo"    value="0x0006" />
+       <IDSymbol name="MyToolbarItemGroup" value="0x1020" />
+    
+    <IDSymbol name="MyMenuController" value ="0x1030"/>
+    <IDSymbol name="cmdidMyAnchorCommand" value="0x0105" />
+      <IDSymbol name="MyToolbarItemGroup" value="0x59"/>
+          <IDSymbol name="cmdidMyDynamicStartCommand00" value="0x1000" />
+    <IDSymbol name="cmdidMyDynamicStartCommand01" value="0x1001" />
+    <IDSymbol name="cmdidMyDynamicStartCommand02" value="0x1002" />
+    <IDSymbol name="cmdidMyDynamicStartCommand03" value="0x1003" />
+    <IDSymbol name="cmdidMyDynamicStartCommand04" value="0x1004" />
+    <IDSymbol name="cmdidMyDynamicStartCommand05" value="0x1005" />
+    <IDSymbol name="cmdidMyDynamicStartCommand06" value="0x1006" />
+    <IDSymbol name="cmdidMyDynamicStartCommand07" value="0x1007" />
+    <IDSymbol name="cmdidMyDynamicStartCommand08" value="0x1008" />
+    <IDSymbol name="cmdidMyDynamicStartCommand09" value="0x1009" />
+    <IDSymbol name="cmdidMyDynamicStartCommand10" value="0x1010" />
+    <IDSymbol name="cmdidMyDynamicStartCommand11" value="0x1011" />  
+    <IDSymbol name="cmdidMyDynamicStartCommand12" value="0x1012" />
+    <IDSymbol name="cmdidMyDynamicStartCommand13" value="0x1013" />
+    <IDSymbol name="cmdidMyDynamicStartCommand14" value="0x1014" />
+    <IDSymbol name="cmdidMyDynamicStartCommand15" value="0x1015" />
+    <IDSymbol name="MyMenuControllerGroup" value="0x1025" />
+    <!-- NOTE: The following command expands at run time to some number of ids.
+     Try not to place command ids after it (e.g. 0x0105, 0x0106).
+     If you must add a command id after it, make the gap very large (e.g. 0x200) -->
+   
+    
+    </GuidSymbol>
+
+    <GuidSymbol name="guidImages" value="{5fb9a34e-0b46-403b-b2e2-8c88ed561813}" >
+      <IDSymbol name="bmpPic1" value="1" />
+    
+ 
+
+    </GuidSymbol>
+ 
+  </Symbols>
+   
+</CommandTable>
